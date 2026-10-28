@@ -27,15 +27,15 @@ WSS listener (no input; query params arrive as DPPs `query_client_name` and `que
 
 The source lives in the Boomi workspace: `scripts/gen_b4.py`, `scripts/b4_*.groovy`, and `scripts/gen_supabase.py` (profiles and Q1–Q6 operations).
 
-## Components (folder `DRYRUN - PatchPilot`)
+## Components (folder `PatchPilot`)
 | Component | ID |
 |---|---|
-| Process `PatchPilot B4 - Compliance Report` | `bdc1c12f-c3da-49e0-8d22-a441dec7328a` |
-| WSS op `PatchPilot_B4_Compliance_Listener_Operation` | `4c2750d0-bb29-41a4-a25d-df7dc84bb0bd` |
-| Connection `PatchPilot_Supabase_Connection` (DB V2, PostgreSQL) | `433c5c79-c66f-400c-86d1-d5b5fac24c57` |
-| Op `PatchPilot_Supabase_Q6_Report_Operation` (Standard Get) | `37b14287-4335-49d8-8f59-98bc4f83d811` |
-| Profile `PatchPilot_Supabase_Q6_Report_Request_Profile` | `0354e0bc-9075-43dd-a3e9-ef440e8876c9` |
-| Profile `PatchPilot_Supabase_Q6_Report_Response_Profile` | `f71ef51c-334c-4ae0-8ac3-7bf84e7c68e1` |
+| Process `PatchPilot B4 - Compliance Report` | `02c7d703-b8a8-439d-b392-4aa6501fcab7` |
+| WSS op `PatchPilot_B4_Compliance_Listener_Operation` | `35031e92-8472-4da9-acc5-dd37eeedab1a` |
+| Connection `PatchPilot_Supabase_Connection` (DB V2, PostgreSQL) | `80e35ad3-9e44-48ba-ab42-4940912ce654` |
+| Op `PatchPilot_Supabase_Q6_Report_Operation` (Standard Get) | `c53154b9-f738-4073-8132-197e3ebaeb65` |
+| Profile `PatchPilot_Supabase_Q6_Report_Request_Profile` | `96707c23-f540-4fd3-9943-f495b26ca8df` |
+| Profile `PatchPilot_Supabase_Q6_Report_Response_Profile` | `71010bbe-d392-4136-8696-1bf82d07ab38` |
 
 The Q1–Q5 operations for B2 exist but are not wired into any process. See the report to the Lead, or `gen_supabase.py`.
 

@@ -15,12 +15,12 @@ also sets `DDP_CLIENT_NAME`) → `Notify: Log request body` → `Try/Catch` →
 Client list (edit it in the Message shape): `Acme Retail`, `https://github.com/BommepalliRoop/demo-target`, `main`,
 `auto_fix: true`, `owner_email: owner@easystepin.com`.
 
-## Components (folder `DRYRUN - PatchPilot`, `Rjo4OTMyNDgz`)
+## Components (folder `PatchPilot`)
 | Component | Type | ID |
 |---|---|---|
-| PatchPilot B1 - Daily Scan Trigger | Process | `5b616403-0e0a-4502-8ac4-bd0c10c8616d` |
-| PatchPilot_Backend_Connection | REST connection, auth NONE | `0f6c6c00-d554-4109-ac5b-8405bbcf342a` |
-| PatchPilot_Backend_CreateScan_Operation | REST operation, POST `/api/scans`, returnApplicationErrors=true | `4d986295-9ab4-453f-8d30-99ebbcf686b0` |
+| PatchPilot B1 - Daily Scan Trigger | Process | `9f802882-827f-4818-bbc7-c2c9b08fcd90` |
+| PatchPilot_Backend_Connection | REST connection, auth NONE | `40573912-dc41-4be0-ab43-caad66821b31` |
+| PatchPilot_Backend_CreateScan_Operation | REST operation, POST `/api/scans`, returnApplicationErrors=true | `66e7cdd2-39de-4106-95bc-17d85310ec9b` |
 
 Source (Boomi workspace, not in this repo): `scripts/gen_b1.py`, `scripts/b1_split_clients.groovy`,
 `scripts/b1_read_response.groovy`, `active-development/{process,connector-settings,connector-action}/…B1…/PatchPilot_Backend_*`.
@@ -48,7 +48,7 @@ The Boomi Companion CLI has no schedule tool, so set it in the GUI. **Turn it on
   later with a Try/Catch `retryCount` or a Decision + Wait if needed.
 - The client list is static in the Message shape (spec: a later version fetches it from the backend).
 
-## Test results (Oct 28, against the placeholder host)
+## Test results (Oct 28 dry run, old `DRYRUN - PatchPilot` copy, against the placeholder host)
 Deployed package `6bc79bd4-4c38-47bc-a0b9-457836215c80` (version 1). Execution
 `execution-76045426-7949-436a-a96f-41a48e3f391c-2026.10.28`: status **COMPLETE**. Process log:
 ```

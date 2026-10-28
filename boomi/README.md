@@ -13,7 +13,9 @@ so the repo shows the whole solution. How to contribute: `docs/BOOMI_HANDOFF.md`
 | Shared Web Server user for PatchPilot | created (username and token are in each developer's `.env` only, never in git) |
 | Compliance database | Supabase `public.compliance_log` created, RLS on, queries tested (see `docs/BOOMI_HANDOFF.md` 4a/4b) |
 | Boomi Companion plugin (`bc-integration`) | installed; workspace `~/Projects/patchpilot-boomi-workspace` on the Mac (outside this repo, `.env` gitignored) |
-| Still to do | Deploy the backend, then put BACKEND_URL + API key into B1, free a 4th licence slot (or undeploy something) and redeploy B1 + set its 09:00 schedule; switch backend to `BOOMI_MODE=live`; rotate the Jira token and Slack webhook (both were pasted in chat) |
+| Boomi folder | `PatchPilot` (hackathon day): a fresh copy of `DRYRUN - PatchPilot` with all dependents, so revision history starts on Oct 28. The DRYRUN processes are undeployed and the folder is left as it is. Component IDs in `B*/README.md` are the `PatchPilot` copies. |
+| Deployed (QA) | `PatchPilot B2`, `B3`, `B4` package 1.0 (Oct 28, 10:12 IST) + `PatchPilot_PostgreSQL_JDBC_Library`. B4 live test: HTTP 200. B2 ping: `ok:true`, Jira `KAN-83`, `slack_sent:true`, compliance row written. B3 not called yet. |
+| Still to do | Deploy the backend, then put BACKEND_URL + API key into B1, free a 4th licence slot (or undeploy something) and deploy B1 + set its 09:00 schedule; switch backend to `BOOMI_MODE=live`; rotate the Jira token, Slack webhook and Shared Web Server token (all were pasted in chat) |
 
 **Where the secrets live:** `BOOMI_USER` / `BOOMI_TOKEN` in the PatchPilot `.env`; `SERVER_USERNAME` / `SERVER_TOKEN`
 and the AtomSphere API token in `D:\hackathon\boomi-workspace\.env`. Both `.env` files are gitignored. The Shared Web Server
