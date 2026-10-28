@@ -1,6 +1,6 @@
 # B2: Finding notification → Supabase compliance log + Jira + Slack
 
-Boomi process **PatchPilot B2 - Finding Notification** (`4d2e7436-862c-4605-8dc1-9b4d0c29b47b`). PatchPilot calls it once for every real finding, and it is idempotent on `finding_id`.
+Boomi process **PatchPilot B2 - Finding Notification** (`db8c9c32-0662-4c76-adde-80875af5ddd9`). PatchPilot calls it once for every real finding, and it is idempotent on `finding_id`.
 
 ## Endpoint
 `POST https://c01-sg.integrate.boomi.com/ws/simple/createPatchpilotfinding` (Basic auth, shared web server user). The body follows `contracts/boomi/B2_finding_request.json`.
@@ -26,14 +26,14 @@ Listener → validate → Try/Catch → Branch: (1) **Q1 lookup** by `finding_id
 Jira: project **KAN**, issue type **Task**, no priority field (team-managed project). The priority is in the summary and the labels. Labels: `patchpilot`, `security`, the client slug, `p1`…`p4`, `pp-<finding_id>`, and `actively-exploited` when the CVE is in CISA KEV.
 Slack: Block Kit message to `#security-alerts` (title by fix status, client/CVE/package/where/exploit/Jira fields, PR and Jira links).
 
-## Components (folder `DRYRUN - PatchPilot`)
+## Components (folder `PatchPilot`)
 | Component | ID |
 |---|---|
-| WSS op `PatchPilot_B2_Finding_Listener_Operation` | `666b421e-a582-474d-8d31-b42c16161267` |
-| `PatchPilot_Jira_Connection` (REST, Basic, password set in GUI) | `e7e8ad95-b8f8-462d-b686-a26aedcbba4e` |
-| `PatchPilot_Jira_CreateIssue_Operation` | `152f6077-6453-4e6c-bbee-6d46e6e1224d` |
-| `PatchPilot_Slack_Connection` (webhook URL set in GUI) | `75b76870-ae10-4efc-a056-97fc74035c0c` |
-| `PatchPilot_Slack_PostMessage_Operation` | `4d12ab17-eabd-4e58-8c58-1636362f60af` |
+| WSS op `PatchPilot_B2_Finding_Listener_Operation` | `4dba5487-798d-4d24-be31-d700fbaea553` |
+| `PatchPilot_Jira_Connection` (REST, Basic, password set in GUI) | `f7b3516d-9bc0-4e0c-abe1-3ab4bba75e35` |
+| `PatchPilot_Jira_CreateIssue_Operation` | `5a90e421-e322-4612-8732-c3447add86d4` |
+| `PatchPilot_Slack_Connection` (webhook URL set in GUI) | `b91bcaf5-afa8-4ca1-91f4-65055a458846` |
+| `PatchPilot_Slack_PostMessage_Operation` | `f9b4bc06-5a61-425b-ade9-b6f593af3810` |
 | `PatchPilot_Supabase_Connection` + Q1–Q5 operations | see `boomi/B4/README.md` |
 
 The source is in the Boomi workspace: `scripts/gen_b2v3.py` and `scripts/b2v3_*.groovy`. Never push the Jira, Slack or Supabase connections from the workspace: a push wipes the secrets that were typed into the GUI.
