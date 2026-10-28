@@ -42,7 +42,7 @@ export default function Integrations() {
   const events = data ?? []
 
   return (
-    <PageShell title="Integrations" subtitle="Boomi processes B1–B4 and recent activity.">
+    <PageShell title="Integrations" subtitle="Boomi processes B1–B4: what triggers each one, what it does, and recent activity.">
       <div className="flex flex-col gap-6">
         {activity.error && <ErrorState message={activity.error} onRetry={reload} />}
 
@@ -67,6 +67,13 @@ export default function Integrations() {
                   </div>
                   <div className="mt-3 font-medium">{p.name}</div>
                   <div className="text-xs text-muted">{p.direction}</div>
+                  <div className="mt-3 text-xs">
+                    <span className="font-medium text-fg">When: </span>
+                    <span className="text-muted">{p.trigger}</span>
+                  </div>
+                  <ul className="mt-2 flex list-disc flex-col gap-1 pl-4 text-xs text-muted">
+                    {p.steps.map((step) => <li key={step}>{step}</li>)}
+                  </ul>
                 </GlassCard>
               )
             })}

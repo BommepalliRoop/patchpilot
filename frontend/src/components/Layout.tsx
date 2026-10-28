@@ -1,10 +1,8 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'motion/react'
 import { ClipboardCheck, LayoutDashboard, Play, Plug, Search, ShieldCheck } from 'lucide-react'
-import { USE_MOCK, getHealth } from '../lib/api'
-import type { Health } from '../lib/types'
-import { ModeBadge } from './ui/Badges'
+import { USE_MOCK } from '../lib/api'
 import DemoReset from './DemoReset'
 
 const NAV = [
@@ -13,16 +11,11 @@ const NAV = [
   { to: '/compliance', label: 'Compliance', icon: ClipboardCheck, end: false },
 ]
 
-// App shell: sidebar (logo, nav, mode badges) + top bar + animated page transitions (fade + 8px slide, 250 ms).
+// App shell: sidebar (logo, nav) + top bar + animated page transitions (fade + 8px slide, 250 ms).
 export default function Layout() {
-  const [health, setHealth] = useState<Health | null>(null)
   const search = useRef<HTMLInputElement>(null)
   const { pathname } = useLocation()
   const navigate = useNavigate()
-
-  useEffect(() => {
-    getHealth().then(setHealth).catch(() => setHealth(null))
-  }, [])
 
   // "/" focuses search (UI_SPEC keyboard rules); ignored while typing in a field.
   useEffect(() => {
@@ -65,12 +58,9 @@ export default function Layout() {
             </NavLink>
           ))}
         </nav>
-        <div className="mt-auto flex flex-col gap-2 rounded-xl border border-border bg-surface-2 p-3">
-          <ModeBadge label="LLM" mode={health?.llm_mode} />
-          <ModeBadge label="Boomi" mode={health?.boomi_mode} />
-          <ModeBadge label="GitHub" mode={health?.github_mode} />
-          {USE_MOCK && <div className="pt-1 text-xs text-warning">UI fixtures (VITE_USE_MOCK)</div>}
-        </div>
+        {USE_MOCK && (
+          <div className="mt-auto rounded-xl border border-border bg-surface-2 p-3 text-xs text-warning">UI fixtures (VITE_USE_MOCK)</div>
+        )}
       </aside>
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="flex items-center gap-4 border-b border-border bg-surface/60 px-8 py-3 backdrop-blur-md">
