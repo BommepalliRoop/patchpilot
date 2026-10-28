@@ -13,6 +13,7 @@ import json
 import logging
 import sys
 import zlib
+from datetime import UTC, datetime, timedelta
 from typing import Any, Literal
 
 import httpx
@@ -29,6 +30,7 @@ logger = logging.getLogger(__name__)
 
 TIMEOUT_S = 15.0
 RETRY_DELAY_S = 1.0
+COMPLIANCE_DEFAULT_DAYS = 90
 
 
 class BoomiError(RuntimeError):
@@ -264,7 +266,9 @@ async def get_compliance(client_name: str, from_date: str | None = None) -> Comp
     """B4: GET `/patchpilot/compliance?client_name=...&from=...` (contracts/boomi/B4_compliance_response.json)."""
     s = get_settings()
     path = s.boomi_b4_path
-    params = {"client_name": client_name, **({"from": from_date} if from_date else {})}
+    # Boomi rejects a missing `from` ("from must be YYYY-MM-DD"), so default to the last 90 days.
+    from_date = from_date or (datetime.now(UTC).date() - timedelta(days=COMPLIANCE_DEFAULT_DAYS)).isoformat()
+    params = {"client_name": client_name, "from": from_date}
     if s.boomi_mode != "live":
         report = _mock_compliance(client_name, from_date)
         _log("B4", path, True, request=params, response=report.model_dump(by_alias=True), status_code=200,

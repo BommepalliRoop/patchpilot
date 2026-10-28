@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import re
 
 import httpx
 import pytest
@@ -160,6 +161,13 @@ async def test_live_b4_get_with_query(monkeypatch):
     assert rep.items[0].jira_key == "SEC-101"
     q = seen[0].url.params
     assert seen[0].method == "GET" and q["client_name"] == "Acme Retail" and q["from"] == "2026-10-01"
+
+
+async def test_live_b4_defaults_from_date(monkeypatch):
+    seen, handler = recorder(httpx.Response(200, json=B4))
+    live(monkeypatch, handler)
+    await boomi_client.get_compliance("Acme Retail")
+    assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", seen[0].url.params["from"])
 
 
 async def test_retry_once_on_5xx_then_ok(monkeypatch):
