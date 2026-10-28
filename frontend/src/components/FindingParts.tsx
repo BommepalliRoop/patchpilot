@@ -82,8 +82,12 @@ const FIX_BANNER: Record<FixState, { cls: string; icon: ReactElement; text: stri
 
 export function FixCard({ d, state, onRerun, busy }: { d: FindingDetail; state: FixState; onRerun: () => void; busy: boolean }) {
   const fix = d.fix
-  const banner = FIX_BANNER[state]
   const pr = safeUrl(fix?.pr_url)
+  // needs_human with passing tests means the fix worked but the PR step failed (see the timeline for why)
+  const prFailed = state === 'needs_human' && !!fix?.tests_passed && !pr
+  const banner = prFailed
+    ? { ...FIX_BANNER.needs_human!, text: 'Needs human — tests passed, but the pull request could not be opened' }
+    : FIX_BANNER[state]
   const working = busy || state === 'fixing'
   return (
     <GlassCard>
